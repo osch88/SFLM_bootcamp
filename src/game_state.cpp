@@ -7,9 +7,7 @@
 
 void GameState::EndState() {}
 
-void GameState::Update(const float& dt) { 
-    (void)dt;
-}
+void GameState::Update(const float& dt) { circle_.Update(dt); }
 
 void GameState::Render(std::shared_ptr<sf::RenderTarget> target)
 {

@@ -2,9 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <memory>
 
 class Entity {
+
 public:
     Entity() {}
     // virtual ~Entity();
