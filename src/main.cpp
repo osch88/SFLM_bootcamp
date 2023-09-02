@@ -6,6 +6,6 @@ constexpr int WIDTH = 1920;
 int main(/* int argc, char *argv[] */)
 {
     Game game(HEIGHT, WIDTH, "Hello World!");
-    game.run();
+    game.Run();
     return 0;
 }

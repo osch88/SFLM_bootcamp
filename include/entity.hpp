@@ -8,29 +8,21 @@
 #include <memory>
 
 class Entity {
-protected:
+public:
     // TODO: Should texture and sprite be part of the Abstract class or the
     // Impementation class?
     sf::Vector2f position_;
-    sf::Sprite sprite_;
-    sf::Texture* texture_;
     float velocity_;
+    sf::Vector2f scale_;
 
 public:
     Entity() {}
-    virtual ~Entity() = default;
+    virtual ~Entity() {}
 
-    void setTexture(sf::Texture* texture)
-    {
-        texture_ = texture;
-        sprite_.setTexture(*texture_);
-    }
-    // std::shared_ptr<sf::Texture> GetTexture() { return texture_; }
+    void SetPosition(sf::Vector2f& position) { position_ = position; }
+    sf::Vector2f GetPosition() { return position_; }
 
-    void setPosition(sf::Vector2f& position) { position_ = position; }
-    sf::Vector2f getPosition() { return position_; }
-
-    virtual void move(const float& dt, const float x, const float y) {}
-    virtual void update(const float& dt) = 0;
-    virtual void render(std::shared_ptr<sf::RenderTarget> target = nullptr) = 0;
+    virtual void Move(const float& dt, const float x, const float y) {}
+    virtual void Update(const float& dt) {}
+    virtual void Render(std::shared_ptr<sf::RenderTarget> target = nullptr) {}
 };

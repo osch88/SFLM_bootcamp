@@ -7,9 +7,8 @@
 #include <memory>
 
 #include "game_state.hpp"
-#include "circle.hpp"
 
-void Game::initWindow()
+void Game::InitWindow()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -18,22 +17,22 @@ void Game::initWindow()
     window_->setFramerateLimit(kFrame_rate);
 }
 
-void Game::initState()
+void Game::InitState()
 {
     states_.push(static_cast<State*>(new GameState(window_)));
 }
 
 void Game::updateDeltaTime() { dt_ = deltaClock_.restart().asSeconds(); }
-void Game::update()
+void Game::Update()
 {
-    this->event();
+    this->Event();
 
     if (!states_.empty()) {
-        states_.top()->update(dt_);
+        states_.top()->Update(dt_);
     }
 }
 
-void Game::event()
+void Game::Event()
 {
     while (window_->pollEvent(event_)) {
         if (event_.type == sf::Event::Closed) {
@@ -48,24 +47,24 @@ void Game::event()
     }
 }
 
-void Game::render()
+void Game::Render()
 {
     // Clear screen
     window_->clear(sf::Color::Black);
 
     if (!states_.empty()) {
-        states_.top()->render();
+        states_.top()->Render();
     }
 
     // Not sure but display sounds good
     window_->display();
 }
 
-void Game::run()
+void Game::Run()
 {
     while (window_->isOpen()) {
         this->updateDeltaTime();
-        this->update();
-        this->render();
+        this->Update();
+        this->Render();
     }
 }

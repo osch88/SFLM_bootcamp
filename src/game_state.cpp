@@ -5,14 +5,14 @@
 
 #include "state.hpp"
 
-void GameState::endState() {}
+void GameState::EndState() {}
 
-void GameState::update(const float& dt) { player_->update(dt); }
+void GameState::Update(const float& dt) { player_->Update(dt); }
 
-void GameState::render(std::shared_ptr<sf::RenderTarget> target)
+void GameState::Render(std::shared_ptr<sf::RenderTarget> target)
 {
     if (!target) {
-        player_->render(this->window_);
+        player_->Render(this->window_);
         // Go on
     }
 }

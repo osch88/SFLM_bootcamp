@@ -1,19 +1,23 @@
 #pragma once
 
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "entity.hpp"
+#include "graphic_component.hpp"
+#include "input_component.hpp"
 
 class Player : public Entity {
 public:
-    Player() : Entity() { init(); }
-    // virtual ~Player();
+    Player(InputComponent* input) : Entity(), input_(input) { init(); }
+    virtual ~Player();
 
     void init();
-    virtual void move(const float& dt, const float x, const float y);
-    virtual void update(const float& dt);
-    virtual void render(std::shared_ptr<sf::RenderTarget> target = nullptr);
+    virtual void Move(const float& dt, const float x, const float y);
+    virtual void Update(const float& dt);
+    virtual void Render(std::shared_ptr<sf::RenderTarget> target = nullptr);
 
 private:
-    sf::Texture texture_;
+    InputComponent* input_;
+    GraphicsComponent graphic_;
 };

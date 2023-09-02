@@ -13,7 +13,6 @@
 #include <string>
 #include <vector>
 
-#include "circle.hpp"
 #include "game_state.hpp"
 #include "entity.hpp"
 
@@ -28,7 +27,7 @@ private:
     std::string title_;
     sf::Event event_;
     std::shared_ptr<sf::RenderWindow> window_;
-    void initWindow();
+    void InitWindow();
 
     // Deltatime
     sf::Clock deltaClock_;
@@ -36,7 +35,7 @@ private:
     void updateDeltaTime();
 
     // State
-    void initState();
+    void InitState();
     std::stack<State*> states_;
 
 public:
@@ -44,13 +43,13 @@ public:
     Game(int height, int width, std::string title)
         : height_(height), width_(width), title_(title)
     {
-        initWindow();
-        initState();
+        InitWindow();
+        InitState();
     }
 
     // Public Methods
-    void update();
-    void event();
-    void render();
-    void run();
+    void Update();
+    void Event();
+    void Render();
+    void Run();
 };
