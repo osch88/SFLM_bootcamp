@@ -28,15 +28,15 @@ private:
     std::string title_;
     sf::Event event_;
     std::shared_ptr<sf::RenderWindow> window_;
-    void InitWindow();
+    void initWindow();
 
     // Deltatime
     sf::Clock deltaClock_;
     float dt_;
-    void UpdateDeltaTime();
+    void updateDeltaTime();
 
     // State
-    void InitState();
+    void initState();
     std::stack<State*> states_;
 
 public:
@@ -44,13 +44,13 @@ public:
     Game(int height, int width, std::string title)
         : height_(height), width_(width), title_(title)
     {
-        InitWindow();
-        InitState();
+        initWindow();
+        initState();
     }
 
     // Public Methods
-    void Update();
-    void Event();
-    void Render();
-    void Run();
+    void update();
+    void event();
+    void render();
+    void run();
 };

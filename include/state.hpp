@@ -15,7 +15,7 @@ public:
 
     std::shared_ptr<sf::RenderWindow> window_;
 
-    virtual void EndState() = 0;
-    virtual void Update(const float& dt) = 0;
-    virtual void Render(std::shared_ptr<sf::RenderTarget> target = nullptr) = 0;
+    virtual void endState() = 0;
+    virtual void update(const float& dt) = 0;
+    virtual void render(std::shared_ptr<sf::RenderTarget> target = nullptr) = 0;
 };

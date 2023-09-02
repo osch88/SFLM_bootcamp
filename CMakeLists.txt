@@ -7,7 +7,7 @@ set (SOURCES
     src/main.cpp
     src/game.cpp
     src/game_state.cpp
-    src/circle.cpp
+    src/player.cpp
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
