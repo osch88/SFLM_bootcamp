@@ -4,14 +4,18 @@ project(sfml-app VERSION 0.1.0)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set (SOURCES
-    src/main.cpp
-    src/game.cpp
-    src/game_state.cpp
-    src/player.cpp
+    app/main.cpp
+    app/entity/src/entity.cpp
+    app/entity/src/player_graphics_component.cpp
+    app/entity/src/player_input_component.cpp
+    app/entity/src/player_physics_component.cpp
+    app/state/src/game.cpp
+    app/state/src/game_state.cpp
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-include_directories(include)
+include_directories(app/entity/include)
+include_directories(app/state/include)
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 

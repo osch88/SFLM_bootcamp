@@ -2,6 +2,8 @@
 
 #include "entity.hpp"
 
+class Entity;
+
 class InputComponent {
 public:
     virtual ~InputComponent() {}
