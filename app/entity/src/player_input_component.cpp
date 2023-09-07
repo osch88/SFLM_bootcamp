@@ -21,6 +21,6 @@ void PlayerInputComponent::Update(const float& dt, Entity& entity)
     }
 
     entity.Move(dt, x, y);
-    std::cout << "X: " << entity.position_.x
-              << "\tY: " << entity.position_.y << std::endl;
+    // std::cout << "X: " << entity.position_.x
+    //           << "\tY: " << entity.position_.y << std::endl;
 }

@@ -17,5 +17,5 @@ public:
 
     virtual void EndState() = 0;
     virtual void Update(const float& dt) = 0;
-    virtual void Render(std::shared_ptr<sf::RenderTarget> target = nullptr) = 0;
+    virtual void Render(const float& dt, std::shared_ptr<sf::RenderTarget> target = nullptr) = 0;
 };

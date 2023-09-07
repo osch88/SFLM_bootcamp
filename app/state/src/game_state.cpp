@@ -9,10 +9,7 @@ void GameState::EndState() {}
 
 void GameState::Update(const float& dt) { player_->Update(dt); }
 
-void GameState::Render(std::shared_ptr<sf::RenderTarget> target)
+void GameState::Render(const float& dt, std::shared_ptr<sf::RenderTarget> target)
 {
-    if (!target) {
-        player_->Render(this->window_);
-        // Go on
-    }
+    player_->Render(dt, window_);
 }

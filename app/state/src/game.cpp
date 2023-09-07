@@ -53,7 +53,7 @@ void Game::Render()
     window_->clear(sf::Color::Black);
 
     if (!states_.empty()) {
-        states_.top()->Render();
+        states_.top()->Render(dt_);
     }
 
     // Not sure but display sounds good

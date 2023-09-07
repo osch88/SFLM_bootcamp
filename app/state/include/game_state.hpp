@@ -21,5 +21,6 @@ public:
 
     void EndState() override;
     void Update(const float& dt) override;
-    void Render(std::shared_ptr<sf::RenderTarget> target = nullptr) override;
+    void Render(const float& dt,
+                std::shared_ptr<sf::RenderTarget> target = nullptr) override;
 };

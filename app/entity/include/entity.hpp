@@ -26,7 +26,6 @@ public:
            PhysicsComponent* physics)
         : input_(input), graphic_(graphic), physics_(physics)
     {
-        graphic_->LoadTexture("../assert/redHood/idle.png");
         position_ = {500.0f, 500.0f};
         velocity_ = 300.0f;
         scale_ = {3.0f, 3.0f};
@@ -35,7 +34,7 @@ public:
 
     void Move(const float& dt, const float x, const float y);
     void Update(const float& dt);
-    void Render(std::shared_ptr<sf::RenderTarget> target);
+    void Render(const float& dt, std::shared_ptr<sf::RenderTarget> target);
 
 private:
     InputComponent* input_;
