@@ -3,6 +3,8 @@ project(sfml-app VERSION 0.1.0)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
+
 set (SOURCES
     app/main.cpp
     app/entity/src/entity.cpp

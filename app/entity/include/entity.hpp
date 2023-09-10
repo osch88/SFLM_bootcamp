@@ -5,7 +5,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <map>
 #include <memory>
+#include <string>
 
 #include "graphic_component.hpp"
 #include "input_component.hpp"
@@ -15,11 +17,20 @@ class InputComponent;
 class GraphicsComponent;
 class PhysicsComponent;
 
+// TODO: This logic should be placed somewhere else
+enum class EntityState {
+    IDLE,
+    RUN,
+    JUMP,
+};
+
 class Entity {
 public:
     sf::Vector2f position_;
     sf::Vector2f scale_;
-    float velocity_;
+    sf::Vector2f velocity_;
+    float speed_;
+    EntityState currentState_;
 
 public:
     Entity(InputComponent* input, GraphicsComponent* graphic,
@@ -27,8 +38,9 @@ public:
         : input_(input), graphic_(graphic), physics_(physics)
     {
         position_ = {500.0f, 500.0f};
-        velocity_ = 300.0f;
+        speed_ = 300.0f;
         scale_ = {3.0f, 3.0f};
+        currentState_ = EntityState::IDLE;
     }
     ~Entity();
 
