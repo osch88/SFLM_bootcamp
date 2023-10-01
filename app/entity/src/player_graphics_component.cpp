@@ -8,7 +8,7 @@
 void PlayerGraphicsComponent::Update(Entity& entity, const float& dt,
                                      std::shared_ptr<sf::RenderTarget> target)
 {
-    this->GetState(entity);
+    this->SetTextureToState(entity);
     this->SetTexture();
     totalFrames_ = texture_.getSize().x / frameWidth_;
     // 18 frames for idle sprite
@@ -40,7 +40,7 @@ bool PlayerGraphicsComponent::LoadTexture(std::string filename,
     return true;
 }
 
-void PlayerGraphicsComponent::GetState(Entity& entity)
+void PlayerGraphicsComponent::SetTextureToState(Entity& entity)
 {
     switch (entity.currentState_)
     {
@@ -62,7 +62,7 @@ void PlayerGraphicsComponent::GetState(Entity& entity)
 void PlayerGraphicsComponent::SetTexture()
 {
     sprite_.setTexture(texture_);
-    sf::Vector2u textureSize = texture_.getSize();
+    // sf::Vector2u textureSize = texture_.getSize();
     this->sprite_.setOrigin(30.0f, 0.0f);
     this->sprite_.setTextureRect(sf::IntRect(0, 0, frameWidth_, frameWidth_));
 }

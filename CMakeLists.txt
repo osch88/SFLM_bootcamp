@@ -21,4 +21,4 @@ include_directories(app/state/include)
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 
-# target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)

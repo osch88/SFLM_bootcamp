@@ -11,5 +11,6 @@ void GameState::Update(const float& dt) { player_->Update(dt); }
 
 void GameState::Render(const float& dt, std::shared_ptr<sf::RenderTarget> target)
 {
+    (void) target;
     player_->Render(dt, window_);
 }

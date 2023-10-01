@@ -53,5 +53,5 @@ private:
     std::map<std::string, sf::Texture> textureMap_;
 
     void SetTexture();
-    void GetState(Entity& entity);
+    void SetTextureToState(Entity& entity);
 };

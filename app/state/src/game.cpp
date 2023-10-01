@@ -38,12 +38,6 @@ void Game::Event()
         if (event_.type == sf::Event::Closed) {
             window_->close();
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            std::cout << "Key pressed" << std::endl;
-        }
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            std::cout << "Mouse pressed" << std::endl;
-        }
     }
 }
 
