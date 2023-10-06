@@ -1,27 +1,45 @@
 #pragma once
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <memory>
+#include <iostream>
 
 class Animation {
 public:
-    Animation(sf::Texture& textureSheet, float speed, sf::Vector2u bounds,
-              sf::IntRect startRect, sf::IntRect endRect)
-        : textureSheet_(textureSheet),
-          speed_(speed),
-          bounds_(bounds),
-          startRect_(startRect),
-          endRect_(endRect)
+    Animation(sf::Texture& texture, float frameRate, sf::IntRect frameRect)
+        : texture_(texture),
+          frameRate_(frameRate),
+          frameRect_(frameRect),
+          frame_(0),
+          totalTime_(0.0f)
     {
+        this->Init();
     }
-
-    sf::Texture& textureSheet_;
-    float speed_;
-    sf::Vector2u bounds_;
-    sf::IntRect startRect_, endRect_;
-
+    std::shared_ptr<sf::Sprite> GetSprite()
+    {
+        if (sprite_ == nullptr) {
+            std::cout << "sprite_ is null" << std::endl;
+        }
+        return sprite_;
+    }
+    bool Play(const float& dt);
     void Update();
     void Pause();
     void Reset();
+
+private:
+    sf::Texture texture_;
+    float frameRate_;
+    sf::IntRect frameRect_;
+    int totalFrames_;
+    int frame_;
+    float totalTime_;
+    std::shared_ptr<sf::Sprite> sprite_;
+
+private:
+    void Init();
 };

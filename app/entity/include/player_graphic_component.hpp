@@ -10,32 +10,15 @@
 #include <memory>
 #include <string>
 
+#include "animation.hpp"
 #include "entity.hpp"
 #include "graphic_component.hpp"
 
 class PlayerGraphicsComponent : public GraphicsComponent {
 public:
     PlayerGraphicsComponent()
-        : frameRate_(0.08),
-          totalTime_(0),
-          frame_(0),
-          totalFrames_(0),
-          frameWidth_(80)
     {
-        if (!this->LoadTexture("../assert/redHood/run_high.png", "run")) {
-            std::cout << "ERROR, loading img" << std::endl;
-        }
-        if (!this->LoadTexture("../assert/redHood/idle.png", "idle")) {
-            std::cout << "ERROR, loading img" << std::endl;
-        }
-        if (!this->LoadTexture("../assert/redHood/jump.png", "jump")) {
-            std::cout << "ERROR, loading img" << std::endl;
-        }
-        this->SetTexture();
-        frameRect_.top = 0;
-        frameRect_.left = 0;
-        frameRect_.width = 80;
-        frameRect_.height = 80;
+        this->Init();
     }
     virtual void Update(Entity& entity, const float& dt,
                         std::shared_ptr<sf::RenderTarget> target);
@@ -43,15 +26,11 @@ public:
 
 private:
     sf::Texture texture_;
-    sf::Sprite sprite_;
-    sf::IntRect frameRect_;
-    float frameRate_;
-    float totalTime_;
-    int frame_;
-    int totalFrames_;
-    int frameWidth_;
+    std::shared_ptr<sf::Sprite> sprite_;
     std::map<std::string, sf::Texture> textureMap_;
+    std::map<EntityState, std::shared_ptr<Animation>> animation_map_;
+    std::shared_ptr<Animation> current_animation_;
 
-    void SetTexture();
-    void SetTextureToState(Entity& entity);
+    void Init();
+    void SetCurrentAnimation(Entity& entity);
 };

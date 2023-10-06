@@ -11,6 +11,7 @@ set (SOURCES
     app/entity/src/player_graphics_component.cpp
     app/entity/src/player_input_component.cpp
     app/entity/src/player_physics_component.cpp
+    app/entity/src/animation.cpp
     app/state/src/game.cpp
     app/state/src/game_state.cpp
     )

@@ -1,36 +1,64 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <iostream>
+#include <memory>
 
+#include "animation.hpp"
 #include "entity.hpp"
 #include "player_graphic_component.hpp"
+
+void PlayerGraphicsComponent::Init()
+{
+    if (!this->LoadTexture("../assert/redHood/run_high.png", "run")) {
+        std::cout << "ERROR, loading img" << std::endl;
+    }
+    if (!this->LoadTexture("../assert/redHood/idle.png", "idle")) {
+        std::cout << "ERROR, loading img" << std::endl;
+    }
+    if (!this->LoadTexture("../assert/redHood/jump.png", "jump")) {
+        std::cout << "ERROR, loading img" << std::endl;
+    }
+    sf::IntRect bounds = {0, 0, 80, 80};
+
+    std::shared_ptr<Animation> idle =
+        std::make_shared<Animation>(textureMap_["idle"], 0.08f, bounds);
+    animation_map_[EntityState::IDLE] = idle;
+
+    std::shared_ptr<Animation> run =
+        std::make_shared<Animation>(textureMap_["run"], 0.08f, bounds);
+    animation_map_[EntityState::RUN] = run;
+
+    std::shared_ptr<Animation> jump =
+        std::make_shared<Animation>(textureMap_["jump"], 0.08f, bounds);
+    animation_map_[EntityState::JUMP] = jump;
+
+    // Check if anything is null
+    for (auto& a : animation_map_) {
+        if (a.second == nullptr) {
+            std::cout << "Animation is null!" << std::endl;
+        }
+    }
+}
 
 void PlayerGraphicsComponent::Update(Entity& entity, const float& dt,
                                      std::shared_ptr<sf::RenderTarget> target)
 {
-    this->SetTextureToState(entity);
-    this->SetTexture();
-    totalFrames_ = texture_.getSize().x / frameWidth_;
-    // 18 frames for idle sprite
-    totalTime_ += dt;
-    if (totalTime_ >= frameRate_) {
-        frameRect_.left = frame_ * frameWidth_;
-        frame_++;
-        totalTime_ = 0;
-    }
-
-    if (frame_ >= totalFrames_) {
-        frame_ = 0;
-    }
-    sprite_.setTextureRect(frameRect_);
-    sprite_.setScale(entity.scale_.x, entity.scale_.y);
-    sprite_.setPosition(entity.position_);
-    target->draw(sprite_);
+    this->SetCurrentAnimation(entity);
+    // CALL ANIMATION
+    current_animation_->Play(dt);
+    sprite_ = current_animation_->GetSprite();
+    sprite_->setScale(entity.scale_.x, entity.scale_.y);
+    sprite_->setPosition(entity.position_);
+    target->draw(*sprite_);
 }
 
 bool PlayerGraphicsComponent::LoadTexture(std::string filename,
                                           std::string fileID)
 {
+    // TODO: Evaluate if Texture should be stored in stack or heap
+    // TODO: Same texture could be used in multiple objects and should
+    // therefore be stored outside any GraphicComponent
     sf::Texture texture;
     if (!texture.loadFromFile(filename)) {
         std::cout << "Failed to load: " << filename << std::endl;
@@ -40,29 +68,25 @@ bool PlayerGraphicsComponent::LoadTexture(std::string filename,
     return true;
 }
 
-void PlayerGraphicsComponent::SetTextureToState(Entity& entity)
+void PlayerGraphicsComponent::SetCurrentAnimation(Entity& entity)
 {
-    switch (entity.currentState_)
-    {
-    case EntityState::IDLE:
-        texture_ = textureMap_["idle"];
-        break;
-    case EntityState::RUN:
-        texture_ = textureMap_["run"];
-        break;
-    case EntityState::JUMP:
-        texture_ = textureMap_["jump"];
-        break;
-    default:
-        std::cout << "Not good, no state found to set texture" << std::endl;
-        break;
+    switch (entity.currentState_) {
+        case EntityState::IDLE:
+            current_animation_ = animation_map_[EntityState::IDLE];
+            break;
+        case EntityState::RUN:
+            current_animation_ = animation_map_[EntityState::RUN];
+            break;
+        case EntityState::JUMP:
+            current_animation_ = animation_map_[EntityState::JUMP];
+            break;
+        default:
+            std::cout << "Not good, no state found to set texture" << std::endl;
+            break;
     }
-}
-
-void PlayerGraphicsComponent::SetTexture()
-{
-    sprite_.setTexture(texture_);
-    // sf::Vector2u textureSize = texture_.getSize();
-    this->sprite_.setOrigin(30.0f, 0.0f);
-    this->sprite_.setTextureRect(sf::IntRect(0, 0, frameWidth_, frameWidth_));
+    if (current_animation_ != nullptr) {
+        sprite_ = current_animation_->GetSprite();
+    } else {
+        std::cout << "Error, current_animation is null" << std::endl;
+    }
 }
