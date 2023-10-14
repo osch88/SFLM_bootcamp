@@ -17,7 +17,7 @@ class InputComponent;
 class GraphicsComponent;
 class PhysicsComponent;
 
-// TODO: This logic should be placed somewhere else
+// FIX: This logic should be placed somewhere else
 enum class EntityState {
     IDLE,
     RUN,

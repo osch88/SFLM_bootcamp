@@ -5,8 +5,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <memory>
 #include <iostream>
+#include <memory>
+#include "entity.hpp"
 
 class Animation {
 public:
@@ -26,7 +27,7 @@ public:
         }
         return sprite_;
     }
-    bool Play(const float& dt);
+    bool Play(const float& dt, const sf::Vector2f& scale, const sf::Vector2f& position);
     void Update();
     void Pause();
     void Reset();

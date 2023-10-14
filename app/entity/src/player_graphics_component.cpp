@@ -8,7 +8,7 @@
 #include "entity.hpp"
 #include "player_graphic_component.hpp"
 
-void PlayerGraphicsComponent::Init()
+void PlayerGraphicsComponent::InitTextures()
 {
     if (!this->LoadTexture("../assert/redHood/run_high.png", "run")) {
         std::cout << "ERROR, loading img" << std::endl;
@@ -19,38 +19,31 @@ void PlayerGraphicsComponent::Init()
     if (!this->LoadTexture("../assert/redHood/jump.png", "jump")) {
         std::cout << "ERROR, loading img" << std::endl;
     }
+}
+
+void PlayerGraphicsComponent::InitAnimation()
+{
     sf::IntRect bounds = {0, 0, 80, 80};
 
     std::shared_ptr<Animation> idle =
-        std::make_shared<Animation>(textureMap_["idle"], 0.08f, bounds);
+        std::make_shared<Animation>(textureMap_["idle"], 0.07f, bounds);
     animation_map_[EntityState::IDLE] = idle;
 
     std::shared_ptr<Animation> run =
-        std::make_shared<Animation>(textureMap_["run"], 0.08f, bounds);
+        std::make_shared<Animation>(textureMap_["run"], 0.04f, bounds);
     animation_map_[EntityState::RUN] = run;
 
     std::shared_ptr<Animation> jump =
-        std::make_shared<Animation>(textureMap_["jump"], 0.08f, bounds);
+        std::make_shared<Animation>(textureMap_["jump"], 0.04f, bounds);
     animation_map_[EntityState::JUMP] = jump;
-
-    // Check if anything is null
-    for (auto& a : animation_map_) {
-        if (a.second == nullptr) {
-            std::cout << "Animation is null!" << std::endl;
-        }
-    }
 }
 
 void PlayerGraphicsComponent::Update(Entity& entity, const float& dt,
                                      std::shared_ptr<sf::RenderTarget> target)
 {
-    this->SetCurrentAnimation(entity);
-    // CALL ANIMATION
-    current_animation_->Play(dt);
-    sprite_ = current_animation_->GetSprite();
-    sprite_->setScale(entity.scale_.x, entity.scale_.y);
-    sprite_->setPosition(entity.position_);
-    target->draw(*sprite_);
+    SetCurrentAnimation(entity);
+    current_animation_->Play(dt, entity.scale_, entity.position_);
+    target->draw(*(current_animation_->GetSprite()));
 }
 
 bool PlayerGraphicsComponent::LoadTexture(std::string filename,
@@ -70,23 +63,31 @@ bool PlayerGraphicsComponent::LoadTexture(std::string filename,
 
 void PlayerGraphicsComponent::SetCurrentAnimation(Entity& entity)
 {
+    bool reset = false;
+
+    if (entity.currentState_ != previous_state_) {
+        reset = true;
+    }
+
     switch (entity.currentState_) {
         case EntityState::IDLE:
             current_animation_ = animation_map_[EntityState::IDLE];
+            previous_state_ = EntityState::IDLE;
             break;
         case EntityState::RUN:
             current_animation_ = animation_map_[EntityState::RUN];
+            previous_state_ = EntityState::RUN;
             break;
         case EntityState::JUMP:
             current_animation_ = animation_map_[EntityState::JUMP];
+            previous_state_ = EntityState::JUMP;
             break;
         default:
             std::cout << "Not good, no state found to set texture" << std::endl;
             break;
     }
-    if (current_animation_ != nullptr) {
-        sprite_ = current_animation_->GetSprite();
-    } else {
-        std::cout << "Error, current_animation is null" << std::endl;
+
+    if (reset) {
+        current_animation_->Reset();
     }
 }

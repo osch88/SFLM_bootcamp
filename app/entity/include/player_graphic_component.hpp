@@ -18,7 +18,8 @@ class PlayerGraphicsComponent : public GraphicsComponent {
 public:
     PlayerGraphicsComponent()
     {
-        this->Init();
+        this->InitTextures();
+        this->InitAnimation();
     }
     virtual void Update(Entity& entity, const float& dt,
                         std::shared_ptr<sf::RenderTarget> target);
@@ -30,7 +31,9 @@ private:
     std::map<std::string, sf::Texture> textureMap_;
     std::map<EntityState, std::shared_ptr<Animation>> animation_map_;
     std::shared_ptr<Animation> current_animation_;
+    EntityState previous_state_;
 
-    void Init();
+    void InitAnimation();
+    void InitTextures();
     void SetCurrentAnimation(Entity& entity);
 };
