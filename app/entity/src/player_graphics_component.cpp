@@ -50,7 +50,7 @@ bool PlayerGraphicsComponent::LoadTexture(std::string filename,
                                           std::string fileID)
 {
     // TODO: Evaluate if Texture should be stored in stack or heap
-    // TODO: Same texture could be used in multiple objects and should
+    // Same texture could be used in multiple objects and should
     // therefore be stored outside any GraphicComponent
     sf::Texture texture;
     if (!texture.loadFromFile(filename)) {
@@ -65,22 +65,22 @@ void PlayerGraphicsComponent::SetCurrentAnimation(Entity& entity)
 {
     bool reset = false;
 
-    if (entity.currentState_ != previous_state_) {
+    if (entity.current_state_ != entity.previous_state_) {
         reset = true;
     }
 
-    switch (entity.currentState_) {
+    switch (entity.current_state_) {
         case EntityState::IDLE:
             current_animation_ = animation_map_[EntityState::IDLE];
-            previous_state_ = EntityState::IDLE;
+            entity.previous_state_ = EntityState::IDLE;
             break;
         case EntityState::RUN:
             current_animation_ = animation_map_[EntityState::RUN];
-            previous_state_ = EntityState::RUN;
+            entity.previous_state_ = EntityState::RUN;
             break;
         case EntityState::JUMP:
             current_animation_ = animation_map_[EntityState::JUMP];
-            previous_state_ = EntityState::JUMP;
+            entity.previous_state_ = EntityState::JUMP;
             break;
         default:
             std::cout << "Not good, no state found to set texture" << std::endl;

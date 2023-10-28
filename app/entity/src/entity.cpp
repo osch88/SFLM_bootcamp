@@ -10,11 +10,12 @@ Entity::~Entity()
     physics_ = nullptr;
 }
 
-void Entity::Move(const float& dt, const float velocity_X, const float velocity_Y)
-{
-    this->position_ = {this->position_.x + velocity_X * this->speed_ * dt,
-                       this->position_.y + velocity_Y * this->speed_ * dt};
-}
+// void Entity::Move(const float& dt, const float velocity_X, const float velocity_Y)
+// {
+//     this->position_ = {this->position_.x + velocity_X * this->speed_ * dt,
+//                        this->position_.y + velocity_Y * this->speed_ * dt};
+// }
+
 void Entity::Update(const float& dt)
 { 
     input_->Update(dt, *this);

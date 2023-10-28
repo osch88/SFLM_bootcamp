@@ -31,7 +31,7 @@ private:
     std::map<std::string, sf::Texture> textureMap_;
     std::map<EntityState, std::shared_ptr<Animation>> animation_map_;
     std::shared_ptr<Animation> current_animation_;
-    EntityState previous_state_;
+    // EntityState previous_state_;
 
     void InitAnimation();
     void InitTextures();

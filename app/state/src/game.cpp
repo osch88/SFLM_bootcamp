@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/ContextSettings.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 #include <iostream>
 #include <memory>
@@ -35,7 +36,8 @@ void Game::Update()
 void Game::Event()
 {
     while (window_->pollEvent(event_)) {
-        if (event_.type == sf::Event::Closed) {
+        if (event_.type == sf::Event::Closed ||
+            event_.key.code == sf::Keyboard::Escape) {
             window_->close();
         }
     }

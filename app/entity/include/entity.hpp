@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -27,10 +28,12 @@ enum class EntityState {
 class Entity {
 public:
     sf::Vector2f position_;
+    float z_location_;
     sf::Vector2f scale_;
     sf::Vector2f velocity_;
     float speed_;
-    EntityState currentState_;
+    EntityState current_state_;
+    EntityState previous_state_;
 
 public:
     Entity(InputComponent* input, GraphicsComponent* graphic,
@@ -40,11 +43,11 @@ public:
         position_ = {500.0f, 500.0f};
         speed_ = 300.0f;
         scale_ = {3.0f, 3.0f};
-        currentState_ = EntityState::IDLE;
+        current_state_ = EntityState::IDLE;
     }
     ~Entity();
 
-    void Move(const float& dt, const float x, const float y);
+    // void Move(const float& dt, const float x, const float y);
     void Update(const float& dt);
     void Render(const float& dt, std::shared_ptr<sf::RenderTarget> target);
 

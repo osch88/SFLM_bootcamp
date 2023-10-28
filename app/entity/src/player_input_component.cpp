@@ -7,18 +7,18 @@
 
 void PlayerInputComponent::Update(const float& dt, Entity& entity)
 {
-    (void) dt;
-    entity.velocity_ = {0.0f, 0.0f};
-    switch (entity.currentState_) {
+    (void)dt;
+    entity.velocity_.x = 0.f;
+    switch (entity.current_state_) {
         case EntityState::IDLE:
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                entity.currentState_ = EntityState::RUN;
+                entity.current_state_ = EntityState::RUN;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                entity.currentState_ = EntityState::RUN;
+                entity.current_state_ = EntityState::RUN;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                entity.currentState_ = EntityState::JUMP;
+                entity.current_state_ = EntityState::JUMP;
             }
             break;
 
@@ -32,16 +32,16 @@ void PlayerInputComponent::Update(const float& dt, Entity& entity)
                 entity.scale_.x = 3.0f;
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                entity.currentState_ = EntityState::JUMP;
+                entity.current_state_ = EntityState::JUMP;
             }
             else {
-                entity.currentState_ = EntityState::IDLE;
+                entity.current_state_ = EntityState::IDLE;
             }
             break;
 
         case EntityState::JUMP:
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                entity.currentState_ = EntityState::IDLE;
+                entity.current_state_ = EntityState::IDLE;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 entity.velocity_.x = -1.0f;
